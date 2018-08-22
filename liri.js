@@ -4,6 +4,7 @@ var request = require("request");
 var chalk = require("chalk");
 var keys = require("./key.js");
 var Spotify = require("node-spotify-api");
+var moment = require("moment");
 var spotify = new Spotify(keys.spotify);
 var nodeArgs = process.argv;
 var movieName = "";
@@ -112,7 +113,8 @@ function getConcertInfo(artistName){
             artistInfo = JSON.parse(body)
             console.log(chalk.green("----------------------------------------------------------------------------------------"));
             for(var i=0; i <artistInfo.length; i++){
-                console.log(chalk.red("Artist/Band Name: ")+artistName+chalk.red("\nName of Venue: ")+artistInfo[i].venue.name+chalk.red("\nVenue Location: ")+artistInfo[i].venue.city+" "+artistInfo[i].venue.region+","+artistInfo[i].venue.country+chalk.red("\nDate: ")+artistInfo[i].datetime+"\n\n");
+                var date = moment(artistInfo[i].datetime).format('L');
+                console.log(chalk.red("Artist/Band Name: ")+artistName+chalk.red("\nName of Venue: ")+artistInfo[i].venue.name+chalk.red("\nVenue Location: ")+artistInfo[i].venue.city+" "+artistInfo[i].venue.region+","+artistInfo[i].venue.country+chalk.red("\nDate: ")+date+"\n\n");
             }
             console.log(chalk.green("----------------------------------------------------------------------------------------"));
         }
